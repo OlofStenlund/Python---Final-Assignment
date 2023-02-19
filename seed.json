@@ -1,0 +1,62 @@
+{    "characters": [
+    {   
+            "name": "Darth Vader", 
+            "description": "Sith Lord",
+            "age": 75,
+            "home_planet": "Tatooine"
+        },
+        {
+            "name": "Lord Sidious",
+            "description": "CEO, Galaxy Empire Inc",
+            "age": 108,
+            "home_planet": "Unknown"
+        },
+        {
+            "name": "R2D2",
+            "description": "Droid",
+            "age": 42,
+            "home_planet": "Naboo"
+        },
+        {
+            "name": "Padme Amidala",
+            "description": "Senator, former head of state",
+            "age": 29,
+            "home_planet": "Naboo"
+        },
+        {
+            "name": "Shmi Skywalker",
+            "description": "Slave",
+            "age": 35,
+            "home_planet": "Tatooine"
+        },
+        {
+            "name": "Obi-Wan Kenobi",
+            "description": "Jedi knight. Presumed dead.",
+            "age": 67,
+            "home_planet": "Stewjon" 
+        }
+    ],
+
+    "planets": [
+        {
+            "name": "Alderaan",
+            "sector": "Core Worlds"
+        },
+        {
+            "name": "Hoth",
+            "sector": "Outer Rim"
+        },
+        {
+            "name": "Tatooine",
+            "sector": "Outer Rim"
+        },
+        {
+            "name": "Alderaan",
+            "sector": "Core Worlds"
+        },
+        {
+            "name": "Lwhekk",
+            "sector": "SsiRuuvi Star Cluster"
+        }
+    ]
+}
