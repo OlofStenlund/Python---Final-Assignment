@@ -23,14 +23,11 @@ def print_person(ret):
     for i in ret:
         print(f"ID: {i['id']} | Name: {i['name']} | Description: {i['description']} | Age: {i['age']} | Home Planet: {i['home_planet']}")
     print("")    
-    # input("Press any key to go back to main menu.")
 
 def print_planet(ret):
     for i in ret:
         print(f"ID: {i['id']} | Name: {i['name']} | Sector: {i['sector']}")
     print("")    
-    # input("Press any key to go back to main menu.")
-
 
 
 #######################
@@ -43,13 +40,11 @@ def get_planets():
     data = res.json() 
     return data 
    
-
 def get_characters():
     res = requests.get(url("/characters/get_characters"))
     data = res.json()
     return data
             
-
 
 ################################
 # get requests with conditions #
@@ -83,20 +78,17 @@ def get_planets_by_sector(sector: str):
 def get_planet_duplicates():
     res = requests.get(url("/planets/get_duplicates"))
     data = res.json()
-    # print(len(data))
     return data
 
 def get_character_duplicates():
     res = requests.get(url("/characters/get_duplicates"))
     data = res.json()
     return data
-### Create a request that gets the people from a certain sector.
-### Using join in SQL
 
-
-#######################
+########################
 # Simple post requests #
-#######################
+########################
+
 
 def add_planet():
     name = input("Name: ")
@@ -119,6 +111,7 @@ def add_character():
 # Delete requestes #
 ####################
 
+
 def delete_character(char: List[Character]):
     name = input("What character would you like to delete?: ")
     # See if name is in table
@@ -134,15 +127,13 @@ def delete_character(char: List[Character]):
     else:
         requests.delete(url(f"/characters/delete_character/{name}"))
 
-    
 def delete_planet(planet : List[Planet]):
     name = input("What planet would you like to delete?: ")
 
     found = False
     for i in planet:
         if i['name'] == name:
-            found = True
-    
+            found = True  
     if found == False:
         print("invalid entry")
         input("")
@@ -150,7 +141,6 @@ def delete_planet(planet : List[Planet]):
     else: 
         requests.delete(url(f"/planets/delete_planet/{name}"))
     
-
 def remove_duplicate_planets():
     requests.delete(url("/planets/remove_duplicates"))
 
@@ -162,21 +152,19 @@ def remove_duplicate_characters():
 # Put requests #
 ################
 
+
 # to modify, first run get_characters to get the right one
 def modify_character(characters: List[Character]):
     old_character = input("What is the name of the character you would like to modify?: ")
-
     found = False
     for i in characters:
         if i['name'] == old_character:
             found = True
-            break
-            
+            break          
     if found == False:
         print("Invalid entry")
         input("")
         return
-    
     else:
         print_person(get_character_by_name(old_character))
         new_name = input("New name (leave empty if same): ")
@@ -200,11 +188,8 @@ def modify_character(characters: List[Character]):
     new_character = Character(name=new_name, description=new_description, age=new_age, home_planet=new_home_planet)
     requests.put(url(f"/characters/modify_character/{old_character}"), json=new_character.dict())
 
-
-
 def modify_planet(planets: List[Planet]):
     old_planet = input("What planet would you like to modify?").strip()
-
     found = False
     for i in planets:
         if i['name'] == old_planet:

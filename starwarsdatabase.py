@@ -18,8 +18,6 @@ class StarWarsDatabase:
         con.commit()
         con.close()
 
-
-
     def call_db(self, query, *args):
         con = sqlite3.connect(self.url)
         cur = con.cursor()

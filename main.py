@@ -1,9 +1,7 @@
-# from functions import get_character_by_name, get_character_by_planet, get_characters, get_planet_by_name, get_planets
 from functions import *
 import os
 
 
-    
 
 def url(route: str):
     return f"http://127.0.0.1:8000{route}"
@@ -27,7 +25,6 @@ def print_menu():
 def main():  
     while True:
         os.system('cls')
-        # print_menu()
         while True:
             print_menu()
             first_choice = input("Please enter your choice: ").strip()
@@ -74,8 +71,8 @@ def main():
                 elif second_choice == 2:
                     os.system('cls')
                     print("Modifying person/creature: ")
-                    modify_character(get_characters())
-                    input("Modofication complete.")
+                    if modify_character(get_characters()) == True:
+                        input("Modofication complete.")
                     continue
                 elif second_choice == 3:
                     os.system('cls')
@@ -109,8 +106,8 @@ def main():
                 elif second_choice == 2:
                     os.system('cls')
                     print("Modifying planet: ")
-                    modify_planet(get_planets())
-                    input("Modifaction complete.")
+                    if modify_planet(get_planets()) == True:
+                        input("Modifaction complete.")
                     continue
                 elif second_choice == 3:
                     os.system('cls')
@@ -244,48 +241,4 @@ def main():
                 input("")
                 
 
-
 main()
-
-
-
-
-
-
-
-
-
-
-
-
-# chars = get_characters() # returns list of dicts
-# modify_character(chars) # take input to look for what to modify
-
-# modify_character(res)
-# char_list = []
-# for i in character_result:
-#     char_list.append(Character(name=i['name'], description=i['description'], age=i['age'], home_planet=i['home_planet']))
-# print(char_list)
-# character_planet = get_character_by_planet("Tatoine")
-# for i in character_planet:
-#     print(f"{i['name']} | {i['age']} years old | {i['description']}")
-
-
-# test = get_planets()
-# for i in test:
-#     print(f"{i['name']} | {i['sector']}")
-
-# test2 = get_character_by_name("R2D2")
-# print(f"{test2['name']} | {test2['description']} | {test2['age']} | {test2['home_planet']}")
-
-
-################### Prints
-
-
-
-
-
-# planet_result = get_planets()
-# for i in planet_result:
-#     print(f"{i['name']} | {i['sector']}")
-

@@ -1,3 +1,14 @@
+Steps:
+
+1: Run seedilfe.py to create and populate database
+2: Activate Uvicorn (app in api.py)
+3: Run main.py
+4: Enjoy
+
+
+
+<!-- 
+
 ## What to do
 
 The database file creates the database and a method for calling the database.
@@ -45,9 +56,4 @@ IF YOU SPECIFY WHAT TYPE OF DATA YOU WANT IN, FASTAPI WILL AUTOMATICALLY CHECK F
 
 5: Add option to alter planet/character by ID
 
-
-
-select *
-count(*)
-from planets
-group by name
+ -->
