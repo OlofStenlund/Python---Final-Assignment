@@ -57,6 +57,33 @@ def get_characters():
 # get requests with conditions #
 ################################
 
+@app.get("/planets/get_planet_by_id/{id}")
+def get_planet(id: int):
+    get_planet_by_id_query = """
+    SELECT * FROM planets WHERE id = ?
+    """
+    planets = []
+    res = db.call_db(get_planet_by_id_query, id)
+    for i in res:
+        id, name, sector = i
+        planets.append(Planet(id=id, name=name, sector=sector))
+    return planets
+
+
+@app.get("/characters/get_character_by_id/{id}")
+def get_character(id: int):
+    get_character_by_id_query = """
+    SELECT * FROM characters WHERE id = ?
+    """
+    characters = []
+    res = db.call_db(get_character_by_id_query, id)
+    for i in res:
+        id, name, description, age, home_planet = i
+        characters.append(Character(id=id, name=name, description=description, age=age, home_planet=home_planet))
+    return characters
+
+
+
 @app.get("/planets/get_planet/{name}")
 def get_planet(name: str):
     get_planet_by_name_query = """
@@ -237,21 +264,21 @@ def delete_duplicate_characters():
 # Put requests #
 ################
 
-@app.put("/characters/modify_character/{name}")
-def modify_character(name: str, new_character: Character):
+@app.put("/characters/modify_character/{id}")
+def modify_character(id: int, new_character: Character):
     update_query = """
     UPDATE characters
     SET name = ?, description = ?, age = ?, home_planet = ?
-    WHERE name = ?
+    WHERE id = ?
     """
     # query, arguments in order. SET first, followed by name chosen
-    db.call_db(update_query, new_character.name, new_character.description, new_character.age, new_character.home_planet, name)
+    db.call_db(update_query, new_character.name, new_character.description, new_character.age, new_character.home_planet, id)
 
-@app.put("/planets/modify_planet/{name}")
-def modify_planet(name: str, new_planet: Planet):
+@app.put("/planets/modify_planet/{id}")
+def modify_planet(id: int, new_planet: Planet):
     update_query = """
     UPDATE planets
     SET name = ?, sector = ?
-    WHERE name = ?
+    WHERE id = ?
     """
-    db.call_db(update_query, new_planet.name, new_planet.sector, name)
+    db.call_db(update_query, new_planet.name, new_planet.sector, id)

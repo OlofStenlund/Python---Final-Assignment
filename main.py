@@ -71,14 +71,27 @@ def main():
                 elif second_choice == 2:
                     os.system('cls')
                     print("Modifying person/creature: ")
-                    if modify_character(get_characters()) == True:
-                        input("Modofication complete.")
-                    continue
+                    old_character = input("What is the name of the character you would like to modify?: ")
+                    character = get_character_by_name(old_character)
+                    if len(character) > 1:
+                        os.system('cls')
+                        print("There is more than one individual with that name.")
+                        print_person(character)
+                        id = input("Type the ID of the individual you'd like to alter: ")
+                        modify_character(id)
+                    elif len(character) == 1:
+                        id = character[0]['id']
+                        modify_character(id)
+                    else: 
+                        print("Invalid entry")
+                        input("")
+                        continue
+
                 elif second_choice == 3:
                     os.system('cls')
                     print("Deleting person/creature: ")
-                    delete_character(get_characters())
-                    input("Creature deleted.")
+                    if delete_character(get_characters()) == True:
+                        input("Creature deleted.")
                     continue
                 elif second_choice == 4:
                     continue
@@ -106,14 +119,27 @@ def main():
                 elif second_choice == 2:
                     os.system('cls')
                     print("Modifying planet: ")
-                    if modify_planet(get_planets()) == True:
-                        input("Modifaction complete.")
-                    continue
+                    old_planet = input("What is the name of the planet you would like to modify?: ")
+                    planets = get_planet_by_name(old_planet)
+                    if len(planets) > 1:
+                        os.system('cls')
+                        print("There is more than one planet with that name.")
+                        print_planet(planets)
+                        id = input("Type the ID of the planet you'd like to alter: ")
+                        modify_planet(id)
+                    elif len(planets) == 1:
+                        id = planets[0]['id']
+                        modify_planet(id)
+                    else: 
+                        print("Invalid entry")
+                        input("")
+                        continue
+
                 elif second_choice == 3:
                     os.system('cls')
                     print("Deleting planet: ")
-                    delete_planet(get_planets())
-                    input("Planet deleted.")
+                    if delete_planet(get_planets()) == True:
+                        input("Planet deleted.")
                     continue
                 elif second_choice == 4:
                     continue

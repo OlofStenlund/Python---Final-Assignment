@@ -50,6 +50,16 @@ def get_characters():
 # get requests with conditions #
 ################################
 
+def get_planet_by_id(id: int):
+    res = requests.get(url(f"/planets/get_planet_by_id/{id}"))
+    data = res.json()
+    return data
+
+def get_character_by_id(id: int):
+    res = requests.get(url(f"/characters/get_character_by_id/{id}"))
+    data = res.json()
+    return data
+
 def get_planet_by_name(name: str):
     res = requests.get(url(f"/planets/get_planet/{name}"))
     data = res.json()
@@ -154,60 +164,39 @@ def remove_duplicate_characters():
 
 
 # to modify, first run get_characters to get the right one
-def modify_character(characters: List[Character]):
-    old_character = input("What is the name of the character you would like to modify?: ")
-    found = False
-    for i in characters:
-        if i['name'] == old_character:
-            found = True
-            break          
-    if found == False:
-        print("Invalid entry")
-        input("")
-        return
-    else:
-        print_person(get_character_by_name(old_character))
-        new_name = input("New name (leave empty if same): ")
-        new_description = input("New description (leave empty if same): ")
-        new_age = input("New age (leave empty if same): ")
-        new_home_planet = input("New home planet (leave empty if same): ")
+def modify_character(id: int):
+    char = get_character_by_id(id)
+    new_name = input("New name (leave empty if same): ")
+    new_description = input("New description (leave empty if same): ")
+    new_age = input("New age (leave empty if same): ")
+    new_home_planet = input("New home planet (leave empty if same): ")
 
-        if not new_name:
-            new_name = i['name']
+    if not new_name:
+        new_name = char[0]['name']
+    
+    if not new_age:
+        new_age = char[0]['age']
+
+    if not new_description:
+        new_description = char[0]['description']
+
+    if not new_home_planet:
+        new_home_planet = char[0]['home_planet']
         
-        if not new_age:
-            new_age = i['age']
-
-        if not new_description:
-            new_description = i['description']
-
-        if not new_home_planet:
-            new_home_planet = i['home_planet']
-
-
     new_character = Character(name=new_name, description=new_description, age=new_age, home_planet=new_home_planet)
-    requests.put(url(f"/characters/modify_character/{old_character}"), json=new_character.dict())
+    requests.put(url(f"/characters/modify_character/{id}"), json=new_character.dict())
 
-def modify_planet(planets: List[Planet]):
-    old_planet = input("What planet would you like to modify?").strip()
-    found = False
-    for i in planets:
-        if i['name'] == old_planet:
-            found = True
-            break
-        
-    if found == False:
-        print("Invalid entry")
-        input("")
-        return
-    else:       
-        print_planet(get_planet_by_name(old_planet))     
-        new_name = input("New name (leave empty if same): ")
-        new_sector = input("New sector (leave empty if same): ")
+def modify_planet(id: int):
+    plan = get_planet_by_id(id)
+    new_name = input("New name (leave empty if same): ")
+    new_sector = input("New sector name (leave empty if same): ")
 
-        if not new_name:
-            new_name = i['name']
-        if not new_sector:
-            new_sector = i['sector']
+    if not new_name:
+        new_name = plan[0]['name']
+    if not new_sector:
+        new_sector = plan[0]['sector']
     new_planet = Planet(name=new_name, sector=new_sector)
-    requests.put(url(f"/planets/modify_planet/{old_planet}"), json=new_planet.dict())
+    requests.put(url(f"/planets/modify_planet/{id}"), json=new_planet.dict())
+    
+
+    
