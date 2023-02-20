@@ -1,10 +1,11 @@
 from typing import List
 import requests
 from api import Character, Planet
-# import json
+import os
 
 def url(route: str):
     return f"http://127.0.0.1:8000{route}"
+
 
 
 ##########################
@@ -122,34 +123,11 @@ def add_character():
 ####################
 
 
-def delete_character(char: List[Character]):
-    name = input("What character would you like to delete?: ")
-    # See if name is in table
-    found = False
-    for i in char:
-        if i['name'] == name:
-            found = True
-    
-    if found == False:
-        print("Invalid entry")
-        input("")
-        return
-    else:
-        requests.delete(url(f"/characters/delete_character/{name}"))
+def delete_character(id):
+    requests.delete(url(f"/characters/delete_character/{id}"))
 
-def delete_planet(planet : List[Planet]):
-    name = input("What planet would you like to delete?: ")
-
-    found = False
-    for i in planet:
-        if i['name'] == name:
-            found = True  
-    if found == False:
-        print("invalid entry")
-        input("")
-        return 
-    else: 
-        requests.delete(url(f"/planets/delete_planet/{name}"))
+def delete_planet(id):
+    requests.delete(url(f"/planets/delete_planet/{id}"))
     
 def remove_duplicate_planets():
     requests.delete(url("/planets/remove_duplicates"))
@@ -163,9 +141,27 @@ def remove_duplicate_characters():
 ################
 
 
+def alter_entry(entry_type, x, mod_or_delete, thing_to_print):
+    if len(entry_type) > 1:
+        os.system('cls')
+        print(f"There is more than one {x} with that name.")
+        thing_to_print(entry_type)
+        id = input(f"Type the ID of the {x} you'd like to alter: ")
+        mod_or_delete(id)
+        input("Complete")
+    elif len(entry_type) == 1:
+        id = entry_type[0]['id']
+        mod_or_delete(id)
+        input("Complete")
+    else: 
+        print("Invalid entry")
+        input("")
+        return  
+    
 # to modify, first run get_characters to get the right one
 def modify_character(id: int):
     char = get_character_by_id(id)
+    print_person(char)
     new_name = input("New name (leave empty if same): ")
     new_description = input("New description (leave empty if same): ")
     new_age = input("New age (leave empty if same): ")
@@ -188,6 +184,7 @@ def modify_character(id: int):
 
 def modify_planet(id: int):
     plan = get_planet_by_id(id)
+    print_planet(plan)
     new_name = input("New name (leave empty if same): ")
     new_sector = input("New sector name (leave empty if same): ")
 

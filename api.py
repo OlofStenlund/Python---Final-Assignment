@@ -217,22 +217,22 @@ def add_character(character: Character):
 # Delete requestes #
 ####################
 
-@app.delete("/characters/delete_character/{name}")
-def delete_character(name: str):
+@app.delete("/characters/delete_character/{id}")
+def delete_character(id: int):
     delete_character_query = """
     DELETE FROM characters 
-    WHERE name = ?
+    WHERE id = ?
     """
-    db.call_db(delete_character_query, name)
+    db.call_db(delete_character_query, id)
     return "Character deleted"
 
-@app.delete("/planets/delete_planet/{name}")
-def delete_character(name: str):
+@app.delete("/planets/delete_planet/{id}")
+def delete_character(id: int):
     delete_planet_query = """
     DELETE FROM planets 
-    WHERE name = ?
+    WHERE id = ?
     """
-    db.call_db(delete_planet_query, name)
+    db.call_db(delete_planet_query, id)
     return "Character deleted"
 
 @app.delete("/planets/remove_duplicates")
