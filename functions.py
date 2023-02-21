@@ -12,6 +12,7 @@ def url(route: str):
 # Functions for main app #
 ##########################
 
+# Checks that input is a number that falls within the range of options 
 def check_input(choice, a, b):
     if not str.isdigit(choice):
         return False
@@ -19,7 +20,7 @@ def check_input(choice, a, b):
         return False
     else:
         return True
-
+    
 def print_person(ret):
     for i in ret:
         print(f"ID: {i['id']} | Name: {i['name']} | Description: {i['description']} | Age: {i['age']} | Home Planet: {i['home_planet']}")
@@ -29,6 +30,24 @@ def print_planet(ret):
     for i in ret:
         print(f"ID: {i['id']} | Name: {i['name']} | Sector: {i['sector']}")
     print("")    
+
+# Serves to deal with the user typing the wrong name
+def alter_entry(entry_type, x: str, mod_or_delete, thing_to_print):
+    if len(entry_type) > 1:
+        os.system('cls')
+        print(f"There is more than one {x} with that name.")
+        thing_to_print(entry_type)
+        id = input(f"Type the ID of the {x} you'd like to alter: ")
+        mod_or_delete(id) #references input dunction delete_ or update_
+        input("Complete")
+    elif len(entry_type) == 1:
+        id = entry_type[0]['id']
+        mod_or_delete(id)
+        input("Complete")
+    else: 
+        print("Invalid entry")
+        input("")
+        return  
 
 
 #######################
@@ -123,10 +142,10 @@ def add_character():
 ####################
 
 
-def delete_character(id):
+def delete_character(id: int):
     requests.delete(url(f"/characters/delete_character/{id}"))
 
-def delete_planet(id):
+def delete_planet(id: int):
     requests.delete(url(f"/planets/delete_planet/{id}"))
     
 def remove_duplicate_planets():
@@ -140,23 +159,6 @@ def remove_duplicate_characters():
 # Put requests #
 ################
 
-
-def alter_entry(entry_type, x, mod_or_delete, thing_to_print):
-    if len(entry_type) > 1:
-        os.system('cls')
-        print(f"There is more than one {x} with that name.")
-        thing_to_print(entry_type)
-        id = input(f"Type the ID of the {x} you'd like to alter: ")
-        mod_or_delete(id)
-        input("Complete")
-    elif len(entry_type) == 1:
-        id = entry_type[0]['id']
-        mod_or_delete(id)
-        input("Complete")
-    else: 
-        print("Invalid entry")
-        input("")
-        return  
     
 # to modify, first run get_characters to get the right one
 def modify_character(id: int):
@@ -169,16 +171,12 @@ def modify_character(id: int):
 
     if not new_name:
         new_name = char[0]['name']
-    
     if not new_age:
         new_age = char[0]['age']
-
     if not new_description:
         new_description = char[0]['description']
-
     if not new_home_planet:
         new_home_planet = char[0]['home_planet']
-        
     new_character = Character(name=new_name, description=new_description, age=new_age, home_planet=new_home_planet)
     requests.put(url(f"/characters/modify_character/{id}"), json=new_character.dict())
 

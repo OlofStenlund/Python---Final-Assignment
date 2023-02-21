@@ -1,6 +1,5 @@
 import json
 from starwarsdatabase import StarWarsDatabase
-import sqlite3
 
 db = StarWarsDatabase("StarWars.db")
 

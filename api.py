@@ -1,8 +1,6 @@
 from fastapi import FastAPI
-from requests import request
 from pydantic import BaseModel
 from typing import List
-from starwarsdatabase import StarWarsDatabase
 from seedfile import db
 
 class Character(BaseModel):
@@ -23,6 +21,7 @@ app = FastAPI()
 #######################
 # Simple get requests #
 #######################
+
 
 @app.get("/")
 def root():
@@ -53,9 +52,11 @@ def get_characters():
         characters.append(Character(id=id, name=name, description= description, age= age, home_planet= home_planet))
     return characters
 
+
 ################################
 # get requests with conditions #
 ################################
+
 
 @app.get("/planets/get_planet_by_id/{id}")
 def get_planet(id: int):
@@ -81,7 +82,6 @@ def get_character(id: int):
         id, name, description, age, home_planet = i
         characters.append(Character(id=id, name=name, description=description, age=age, home_planet=home_planet))
     return characters
-
 
 
 @app.get("/planets/get_planet/{name}")
@@ -188,6 +188,7 @@ def get_character_duplicates():
         duplicates.append(Character(id=id, name=name, description=description, age=age, home_planet=home_planet))
     return duplicates
 
+
 #################
 # Post requests #
 #################
@@ -212,10 +213,34 @@ def add_character(character: Character):
     return "Character added"
 
 
+################
+# Put requests #
+################
+
+
+@app.put("/characters/modify_character/{id}")
+def modify_character(id: int, new_character: Character):
+    update_query = """
+    UPDATE characters
+    SET name = ?, description = ?, age = ?, home_planet = ?
+    WHERE id = ?
+    """
+    # query, arguments in order. SET first, followed by name chosen
+    db.call_db(update_query, new_character.name, new_character.description, new_character.age, new_character.home_planet, id)
+
+@app.put("/planets/modify_planet/{id}")
+def modify_planet(id: int, new_planet: Planet):
+    update_query = """
+    UPDATE planets
+    SET name = ?, sector = ?
+    WHERE id = ?
+    """
+    db.call_db(update_query, new_planet.name, new_planet.sector, id)
 
 ####################
 # Delete requestes #
 ####################
+
 
 @app.delete("/characters/delete_character/{id}")
 def delete_character(id: int):
@@ -259,26 +284,3 @@ def delete_duplicate_characters():
     """
     db.call_db(delete_query_characters)
 
-
-################
-# Put requests #
-################
-
-@app.put("/characters/modify_character/{id}")
-def modify_character(id: int, new_character: Character):
-    update_query = """
-    UPDATE characters
-    SET name = ?, description = ?, age = ?, home_planet = ?
-    WHERE id = ?
-    """
-    # query, arguments in order. SET first, followed by name chosen
-    db.call_db(update_query, new_character.name, new_character.description, new_character.age, new_character.home_planet, id)
-
-@app.put("/planets/modify_planet/{id}")
-def modify_planet(id: int, new_planet: Planet):
-    update_query = """
-    UPDATE planets
-    SET name = ?, sector = ?
-    WHERE id = ?
-    """
-    db.call_db(update_query, new_planet.name, new_planet.sector, id)

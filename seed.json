@@ -2,7 +2,7 @@
     {   
             "name": "Darth Vader", 
             "description": "Sith Lord",
-            "age": 75,
+            "age": 60,
             "home_planet": "Tatooine"
         },
         {
@@ -14,25 +14,25 @@
         {
             "name": "R2D2",
             "description": "Droid",
-            "age": 42,
+            "age": 70,
             "home_planet": "Naboo"
         },
         {
             "name": "Padme Amidala",
-            "description": "Senator, former head of state",
+            "description": "Senator, former head of state. Dead",
             "age": 29,
             "home_planet": "Naboo"
         },
         {
             "name": "Shmi Skywalker",
-            "description": "Slave",
+            "description": "Slave. Dead",
             "age": 35,
             "home_planet": "Tatooine"
         },
         {
             "name": "Obi-Wan Kenobi",
             "description": "Jedi knight. Presumed dead.",
-            "age": 67,
+            "age": 70,
             "home_planet": "Stewjon" 
         }
     ],
@@ -57,6 +57,14 @@
         {
             "name": "Lwhekk",
             "sector": "SsiRuuvi Star Cluster"
+        },
+        {
+            "name": "Naboo",
+            "sector": "Mid Rim"
+        },
+        {
+            "name": "Aleen",
+            "sector": "Inner Rim"
         }
     ]
 }
